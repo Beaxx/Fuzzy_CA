@@ -2,6 +2,13 @@ from Grid import Grid
 
 
 def affiliation_function(grid, row, col):
+    """
+        Führt kombiniert die Zugehörigkeitsfunktionen aus
+    :param grid: Datenraster
+    :param row: Reihe
+    :param col: Spalte
+    :return:
+    """
     surrounding_coords = Grid.select_cells(grid, row, col)
 
     environment_value = 0
@@ -15,6 +22,11 @@ def affiliation_function(grid, row, col):
 
 
 def no_function(moore_value):
+    """
+    Zugehörigkeitsfunktion für das "NEIN"-Set
+    :param moore_value: Durchschnittswert der Moore-Umgebung
+    :return: Funktionswert
+    """
     if -1 <= moore_value <= 0:
         return -moore_value
     else:
@@ -32,6 +44,11 @@ def no_function(moore_value):
 
 # Abstiantion function with slope 2 / -2
 def abst_function(moore_value):
+    """
+    Zugehörigkeitsfunktion für das "Enthaltung"-Set
+    :param moore_value: Durchschnittswert der Moore-Umgebung
+    :return: Funktionswert
+    """
     if -0.5 <= moore_value < 0.0:
         return 2 * moore_value + 1
     elif 0.0 < moore_value <= 0.5:
@@ -43,6 +60,11 @@ def abst_function(moore_value):
 
 
 def yes_function(moore_value):
+    """
+    Zugehörigkeitsfunktion für das "Ja"-Set
+    :param moore_value: Durchschnittswert der Moore-Umgebung
+    :return: Funktionswert
+    """
     if 0 <= moore_value <= 1:
         return moore_value
     else:

@@ -1,6 +1,4 @@
 from graphics import *
-from Cell import Cell
-import Inference as Inf
 
 
 def draw_grid_initial(window, grid):
@@ -17,10 +15,13 @@ def draw_grid_initial(window, grid):
                 draw_on_screen.append(draw_crisp_cell(window, grid, row, col, grid.cells[row][col]))
     return draw_on_screen
 
+
 def draw_grid(window, grid):
     """
     Zeichnet das Raster in das geöffnete Fenster.
-    :return Eindimensionales Jagged-Array mit allen gezeichneten Elementen
+    :param window: Darstellungsfenster
+    :param grid: Datenraster
+    :return: Eindimensionales Jagged-Array mit allen gezeichneten Elementen
     """
     draw_on_screen = []
     for row in range(0, len(grid.cells)):
@@ -34,7 +35,14 @@ def draw_grid(window, grid):
 
 def draw_crisp_cell(window, grid, row, col, cell):
     """
-    Erstellt die grafische Repräsentation einer Defuzzifizierten Zelle
+    Erstellt die grafische Repräsentation einer Defuzzifizierten bzw. distinkten oder crispen Zelle
+
+    :param window: Darstellungsfenster
+    :param grid: Datenraster
+    :param row: Reihe der Zelle
+    :param col:  Zeile der Zelle
+    :param cell: Zellen-Objekt
+    :return: [Rechteck Grafikobjekt, Text Grafikobjekt]
     """
     p1 = Point(col * grid.cell_size, row * grid.cell_size)
     p2 = Point(col * grid.cell_size + grid.cell_size, row * grid.cell_size + grid.cell_size)
@@ -68,6 +76,15 @@ def draw_crisp_cell(window, grid, row, col, cell):
 def draw_fuzzy_cell(window, grid, row, col, cell):
     """
         Erstellt die grafische Repräsentation einer Fuzzifizierten Zelle
+    :param window: Darstellungsfenster
+    :param grid: Datenraster
+    :param row: Reihe der Zelle
+    :param col:  Zeile der Zelle
+    :param cell: Zellen-Objekt
+    :return: [Oberes Rechteck Grafikobjekt,
+                Mittleres Rechteck Grafikobjekt,
+                Unteres Rechteck Grafikobjekt,
+                Text Grafikobjekt]
     """
 
     # top rectangle - no
@@ -113,6 +130,11 @@ def draw_fuzzy_cell(window, grid, row, col, cell):
 
 
 def undraw_elements(drawn_elements):
+    """
+    Löscht Grafikelemente aus der Darstellungsansicht
+    :param drawn_elements:
+    :return:
+    """
     for cell in drawn_elements:
         for element in cell:
             element.undraw()

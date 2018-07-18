@@ -4,6 +4,7 @@ from Cell import Cell
 from typing import List
 import GraphicsUnit as Gu
 
+
 class Grid:
     def __init__(self):
         self.width = config.grid_width
@@ -14,6 +15,10 @@ class Grid:
 
     # Outer Cells are Crisp, Inner Cells are Fuzzy
     def initialize(self):
+        """
+        Initialisiert ein Raster von Zellen
+        :param self:
+        """
         for row in range(0, self.height):
             self.cells.append([])
             for col in range(0, self.width):
@@ -23,12 +28,21 @@ class Grid:
                     self.cells[row].append(Cell(1))
 
     def create_fuzzy(self):
+        """
+        Durchsicht das Datenraster (3x3) nach der Zentral-Zelle und
+        fuzzifiziert diese auf Basis der affiliation_function
+        """
         for row in range(0, self.height):
             for col in range(0, self.width):
                 if not (row == 0 or row == self.height - 1 or col == 0 or col == self.width - 1):
                     self.cells[row][col].fuzzy_value = Inf.affiliation_function(self, row, col)
 
     def defuzz(self, window):
+        """
+        Defuzzifiziert die Zentralzelle, indem der Höchste Zugehörigkeitswert der Zelle darüber entscheided, welcher
+        distinkte Wert der Zelle zugeordnet wird
+        :param window: Darstellungsfenster
+        """
         for row in range(0, self.height):
             for col in range(0, self.width):
                 if not (row == 0 or row == self.height - 1 or col == 0 or col == self.width - 1):
@@ -97,12 +111,3 @@ class Grid:
         elif (grid.height-1 == row) and (grid.width-1 == col):
             return [[row - 1, col], [row - 1, col - 1], [row, col - 1], [0, col - 1], [0, col], [0, 0],
                     [row, 0], [row - 1, 0]]
-
-#     def add_up_environment(self, row, col):
-#         value = 0
-#
-#         environment = self.select_cells()
-#
-#         for i, element in enumerate(environment):
-#             value += De.defuz(self.cells[environment[i][0]][environment[i][1]])
-# >
